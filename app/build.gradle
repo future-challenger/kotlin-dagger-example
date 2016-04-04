@@ -1,17 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+// provided & optional
+apply plugin: 'nebula.provided-base'
+apply plugin: 'nebula.optional-base'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "24.0.0 rc1"
 
     defaultConfig {
-        applicationId "org.loop.example"
-        minSdkVersion 16
+        applicationId "demo.retrofit2rxjavademo"
+        minSdkVersion 18
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -21,60 +24,40 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
-    dexOptions {
-        javaMaxHeapSize "2048M"
-    }
-}
-
-kapt {
-    generateStubs = true
 }
 
 dependencies {
-    //automatically added dependencies when project was created
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    //Kotlin dependencies including Anko
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.jetbrains.anko:anko-support-v4:0.8.2'
-    /**
-     * Anko's DSL dependencies
-     */
-//    compile 'org.jetbrains.anko:anko-sdk15:0.7.1' // sdk19, sdk21, sdk23 are also available
-//    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.7.1'
-//    compile 'org.jetbrains.anko:anko-percent:0.7.1'
-//    compile 'org.jetbrains.anko:anko-gridlayout-v7:0.7.1'
-//    compile 'org.jetbrains.anko:anko-design:0.7.1'
-//    compile 'org.jetbrains.anko:anko-cardview-v7:0.7.1'
-//    compile 'org.jetbrains.anko:anko-appcompat-v7:0.7.1'
+    compile 'com.android.support:appcompat-v7:23.2.1'
 
-    //Dagger 2 dependencies
-    compile 'com.google.dagger:dagger:2.0.2'
-    kapt 'com.google.dagger:dagger-compiler:2.0.2'
+    compile 'com.google.dagger:dagger:2.2'
+    optional 'com.google.dagger:dagger-compiler:2.2'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-    //Android basic dependencies
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    //Networking dependencies
-//    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-//    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-//    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-//    compile 'com.squareup.picasso:picasso:2.5.2'
-    //Rx dependencies
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxkotlin:0.40.1'
-    //Test dependencies
-    androidTestCompile 'commons-io:commons-io:2.4'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+
 }
 
 buildscript {
+    ext.kotlin_version = '1.0.1-2'
     repositories {
         mavenCentral()
+        jcenter {
+            url "http://jcenter.bintray.com"
+        }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // provided & optional
+        classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.jfrog.org/libs-snapshot' }
+    jcenter {
+        url "http://jcenter.bintray.com"
     }
 }

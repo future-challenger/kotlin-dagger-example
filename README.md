@@ -1,7 +1,8 @@
 kotlin-dagger-example
 =====================
 
-This project demonstrate how to setup an Android Project with Kotlin 1.0.1-2 and Dagger 2.2.
+**UPDATE**This project demonstrate how to setup an Android Project with Kotlin 1.0.1-2 and Dagger 2.2.
+But i dont konw why it's not working. If I do all this in Java, it's working.
 
 It's based on Dagger 2 [example](https://github.com/google/dagger/tree/master/examples/android-simple)
 
